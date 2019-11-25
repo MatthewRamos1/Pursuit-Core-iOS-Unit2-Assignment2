@@ -9,12 +9,56 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+  
+    @IBOutlet weak var tableView: UITableView!
+    var seasons = [[GOTEpisode]]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    seasons = GOTEpisode.getSeasons()
+    tableView.dataSource = self
   }
 
 
+}
+
+extension ViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        seasons[section].count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        var cell: CustomCell //!
+        
+        if indexPath.section % 2 == 0 {
+            guard let GoTcell = tableView.dequeueReusableCell(withIdentifier: "leftImageCell", for: indexPath) as? CustomCell else {
+                fatalError()
+            }
+            cell = GoTcell
+        } else {
+            guard let GoTcell = tableView.dequeueReusableCell(withIdentifier: "rightImageCell", for: indexPath) as? CustomCell else {
+                fatalError()
+            }
+            cell = GoTcell
+        }
+        let episode = seasons[indexPath.section][indexPath.row]
+        cell.configureCell(for: episode)
+        return cell
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+       return seasons.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return String(seasons[section].first?.season ?? 0)
+    }
 }
 
