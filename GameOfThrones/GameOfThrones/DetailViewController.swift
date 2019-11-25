@@ -10,12 +10,14 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    @IBOutlet weak var episodeImage: UIImageView!
+    @IBOutlet weak var episodeDescription: UITextView!
     var episode: GOTEpisode?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateUI()
 
-      
     }
     
     func updateUI() {
@@ -23,6 +25,8 @@ class DetailViewController: UIViewController {
             fatalError()
         }
         navigationItem.title = GoTepisode.name
+        episodeImage.image = UIImage(named: episode?.originalImageID ?? "Error")
+        episodeDescription.text = GoTepisode.summary
         
     }
 

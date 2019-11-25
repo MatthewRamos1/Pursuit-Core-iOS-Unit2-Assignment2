@@ -23,6 +23,14 @@ class ViewController: UIViewController {
     tableView.dataSource = self
     tableView.delegate = self
   }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let detailViewController = segue.destination as? DetailViewController, let indexPath = tableView.indexPathForSelectedRow else {
+            fatalError("Error with prepare for segue")
+        }
+        detailViewController.episode = seasons[indexPath.section][indexPath.row]
+        
+        
+    }
 
 
 }
@@ -44,7 +52,7 @@ extension ViewController: UITableViewDataSource {
             cell = GoTcell
         } else {
             guard let GoTcell = tableView.dequeueReusableCell(withIdentifier: "rightImageCell", for: indexPath) as? CustomCell else {
-                fatalError()
+                fatalError("Error with dequeueReusableCell")
             }
             cell = GoTcell
         }
