@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     seasons = GOTEpisode.getSeasons()
     tableView.dataSource = self
+    tableView.delegate = self
   }
 
 
@@ -62,3 +63,8 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 92
+    }
+}
