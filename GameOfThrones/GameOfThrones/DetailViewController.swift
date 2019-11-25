@@ -22,7 +22,7 @@ class DetailViewController: UIViewController {
     
     func updateUI() {
         guard let GoTepisode = episode else {
-            fatalError()
+            fatalError("Error: Episode not pulled correctly, check segue")
         }
         navigationItem.title = GoTepisode.name
         episodeImage.image = UIImage(named: episode?.originalImageID ?? "Error")
